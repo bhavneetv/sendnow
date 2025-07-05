@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>503 Service Unavailable</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a1929;
+            color: #e6f1ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            background: linear-gradient(45deg, #0062ff, #00c6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .error-message {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #90caf9;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #0062ff, #00c6ff);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 98, 255, 0.3);
+        }
+
+        /* Server rack animation */
+        .server-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .server {
+            position: absolute;
+            width: 60px;
+            height: 8px;
+            background: linear-gradient(90deg, #001e3c, #0050b3);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(0, 98, 255, 0.5);
+        }
+
+        .server::before {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #00c6ff;
+            right: 5px;
+            top: 1px;
+            animation: blink 2s infinite;
+        }
+
+        .server:nth-child(even)::before {
+            animation-delay: 1s;
+            background-color: #ff3860;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* Pulse animation */
+        .pulse {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(0, 98, 255, 0.1);
+            z-index: 0;
+        }
+
+        .pulse::before, .pulse::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            background: rgba(0, 98, 255, 0.1);
+            animation: pulse 4s infinite;
+        }
+
+        .pulse::after {
+            animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            
+            .error-message {
+                font-size: 1.5rem;
+            }
+            
+            .description {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 4rem;
+            }
+            
+            .error-message {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+            
+            .server {
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pulse"></div>
+    <div class="server-container" id="server-container"></div>
+    
+    <div class="container">
+        <h1 class="error-code">503</h1>
+        <h2 class="error-message">Service Unavailable</h2>
+        <p class="description">Our servers are currently experiencing high load or undergoing maintenance. Please try again later or contact support if the problem persists.</p>
+        <a href="javascript:window.location.reload()" class="btn">Try Again</a>
+    </div>
+
+    <script>
+        // Create server rack animation
+        const serverContainer = document.getElementById('server-container');
+        const containerWidth = window.innerWidth;
+        const containerHeight = window.innerHeight;
+        const serverCount = Math.floor(containerHeight / 20); // Create a server every 20px of height
+        
+        for (let i = 0; i < serverCount; i++) {
+            const server = document.createElement('div');
+            server.className = 'server';
+            
+            // Position servers in a rack-like arrangement
+            const yPos = 10 + (i * 20); // Vertically spaced
+            const xOffset = Math.sin(i * 0.2) * 10; // Slight horizontal variation
+            const xPos = containerWidth / 2 - 30 + xOffset;
+            
+            server.style.top = `${yPos}px`;
+            server.style.left = `${xPos}px`;
+            
+            // Add subtle animation to each server
+            server.style.animationDelay = `${i * 0.1}s`;
+            server.style.transform = 'translateZ(0)';
+            
+            serverContainer.appendChild(server);
+        }
+        
+        // Add interactivity - servers react to mouse movement
+        document.addEventListener('mousemove', function(e) {
+            const servers = document.querySelectorAll('.server');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            servers.forEach((server, index) => {
+                const distanceFromCenter = Math.abs(index - serverCount/2) / (serverCount/2);
+                const moveFactor = 5 * (1 - distanceFromCenter);
+                const xMove = (x - 0.5) * moveFactor;
+                
+                server.style.transform = `translateX(${xMove}px)`;
+                
+                // Change blinking pattern based on mouse position
+                if (Math.abs(y - (server.offsetTop / containerHeight)) < 0.1) {
+                    server.querySelector('::before')?.style.animationDuration = '0.5s';
+                } else {
+                    server.querySelector('::before')?.style.animationDuration = '2s';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

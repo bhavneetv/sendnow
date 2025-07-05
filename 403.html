@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 Forbidden</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+        
+        .lock {
+            stroke-dasharray: 350;
+            stroke-dashoffset: 350;
+            animation: dash 1.5s ease-in-out forwards;
+        }
+        
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: rgba(59, 130, 246, 0.3);
+            animation: float 8s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+    <!-- Particles background -->
+    <div class="particles"></div>
+    
+    <div class="max-w-lg w-full bg-gray-800 rounded-xl shadow-2xl p-8 relative overflow-hidden transform transition-all duration-300 hover:scale-105">
+        <!-- Glowing border effect -->
+        <div class="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 opacity-30"></div>
+        
+        <div class="relative z-10">
+            <!-- Lock icon SVG -->
+            <div class="flex justify-center mb-8">
+                <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5" class="lock">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            
+            <div class="text-center">
+                <h1 class="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500 mb-2" id="statusCode">403</h1>
+                <h2 class="text-xl md:text-2xl font-semibold mb-4 text-blue-300">Access Forbidden</h2>
+                <p class="text-gray-300 mb-8">Sorry, you don't have permission to access this resource.</p>
+                
+                <button id="goBack" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium rounded-lg shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-1">
+                    Go Back
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <p class="mt-8 text-gray-400 text-sm">© 2025 SendNow. All rights reserved.</p>
+    
+    <script>
+        // Generate floating particles
+        const createParticles = () => {
+            const particlesContainer = document.querySelector('.particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random positioning
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const size = Math.random() * 6 + 2;
+                const opacity = Math.random() * 0.5 + 0.1;
+                const delay = Math.random() * 5;
+                
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.opacity = opacity;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${8 + Math.random() * 10}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        };
+        
+        // Animation for the 403 text
+        const animateStatusCode = () => {
+            gsap.fromTo("#statusCode", 
+                { scale: 0.5, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 1, ease: "elastic.out(1, 0.5)" }
+            );
+        };
+        
+        // Go back button functionality
+        document.getElementById('goBack').addEventListener('click', () => {
+            window.history.back();
+        });
+        
+        // Initialize everything
+        window.addEventListener('load', () => {
+            createParticles();
+            animateStatusCode();
+        });
+    </script>
+</body>
+</html>

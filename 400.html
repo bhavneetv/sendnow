@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>400 Bad Request</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a1929;
+            color: #e6f1ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 90%;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            background: linear-gradient(45deg, #0062ff, #00c6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .error-message {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #90caf9;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #0062ff, #00c6ff);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 98, 255, 0.3);
+        }
+
+        /* Floating circles animation */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #0062ff20, #00c6ff20);
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .circle:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            left: 15%;
+            animation-delay: 1s;
+        }
+
+        .circle:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 30%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        .circle:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            bottom: 15%;
+            right: 15%;
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% {
+                transform: translateY(0) translateX(20px);
+            }
+            75% {
+                transform: translateY(20px) translateX(10px);
+            }
+        }
+
+        /* Glitch animation for 400 */
+        @keyframes glitch {
+            0% {
+                text-shadow: 0.05em 0 0 rgba(0, 198, 255, 0.75), -0.05em -0.025em 0 rgba(0, 98, 255, 0.75);
+            }
+            14% {
+                text-shadow: 0.05em 0 0 rgba(0, 198, 255, 0.75), -0.05em -0.025em 0 rgba(0, 98, 255, 0.75);
+            }
+            15% {
+                text-shadow: -0.05em -0.025em 0 rgba(0, 198, 255, 0.75), 0.025em 0.025em 0 rgba(0, 98, 255, 0.75);
+            }
+            49% {
+                text-shadow: -0.05em -0.025em 0 rgba(0, 198, 255, 0.75), 0.025em 0.025em 0 rgba(0, 98, 255, 0.75);
+            }
+            50% {
+                text-shadow: 0.025em 0.05em 0 rgba(0, 198, 255, 0.75), 0.05em 0 0 rgba(0, 98, 255, 0.75);
+            }
+            99% {
+                text-shadow: 0.025em 0.05em 0 rgba(0, 198, 255, 0.75), 0.05em 0 0 rgba(0, 98, 255, 0.75);
+            }
+            100% {
+                text-shadow: -0.025em 0 0 rgba(0, 198, 255, 0.75), -0.025em -0.025em 0 rgba(0, 98, 255, 0.75);
+            }
+        }
+
+        .error-code {
+            animation: glitch 3s infinite;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            
+            .error-message {
+                font-size: 1.5rem;
+            }
+            
+            .description {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 4rem;
+            }
+            
+            .error-message {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+            
+            .circle {
+                opacity: 0.4;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    
+    <div class="container">
+        <h1 class="error-code">400</h1>
+        <h2 class="error-message">Bad Request</h2>
+        <p class="description">Oops! The server couldn't understand the request due to invalid syntax. Please check your request and try again.</p>
+        <a href="/" class="btn">Go Back Home</a>
+    </div>
+
+    <script>
+        // Add some extra interactivity
+        document.addEventListener('mousemove', function(e) {
+            const circles = document.querySelectorAll('.circle');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            circles.forEach((circle, index) => {
+                const factor = (index + 1) * 5;
+                const offsetX = (x - 0.5) * factor;
+                const offsetY = (y - 0.5) * factor;
+                
+                circle.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
